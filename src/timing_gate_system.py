@@ -11,13 +11,20 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.cm as cm  # สำหรับ color map
+
+# Get the project root directory (parent of src/)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(PROJECT_ROOT, "data")
+ASSETS_DIR = os.path.join(PROJECT_ROOT, "assets")
+
 # ----------------------------
 # ตั้งค่าเริ่มต้น
 # ----------------------------
 BROKER_DEFAULT_IP = "192.168.100.189"
-RESULT_FILE = "timing_gate_results.json"
-ATHLETE_FILE = "athletes.json"
-TEAM_FILE = "teams.json"
+RESULT_FILE = os.path.join(DATA_DIR, "timing_gate_results.json")
+ATHLETE_FILE = os.path.join(DATA_DIR, "athletes.json")
+TEAM_FILE = os.path.join(DATA_DIR, "teams.json")
+TEAM_RESULT_FILE = os.path.join(DATA_DIR, "team_results.json")
 
 
 start_times = {}  # athlete_id -> start timestamp
@@ -400,7 +407,7 @@ def save_results():
     if is_team_mode and selected_team:
         # ✅ โหมดทีม → เซฟ team_results.json
         try:
-            with open("team_results.json", "r", encoding="utf-8") as f:
+            with open(TEAM_RESULT_FILE, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 all_results = data.get("results", [])
         except:
@@ -421,7 +428,7 @@ def save_results():
                 }
                 all_results.append(result_entry)
 
-        with open("team_results.json", "w", encoding="utf-8") as f:
+        with open(TEAM_RESULT_FILE, "w", encoding="utf-8") as f:
             json.dump({"results": all_results}, f, indent=4)
 
         messagebox.showinfo("Saved", f"Team '{selected_team['name']}' results saved.")
@@ -1220,7 +1227,7 @@ def view_team_results():
             return
 
         new_data = [r for r in results if not (r["team"] == team and r["date"] == date)]
-        with open("team_results.json", "w", encoding="utf-8") as f:
+        with open(TEAM_RESULT_FILE, "w", encoding="utf-8") as f:
             json.dump({"results": new_data}, f, indent=4)
 
         tree.delete(sel)

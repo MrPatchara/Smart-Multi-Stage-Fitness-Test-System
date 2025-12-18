@@ -13,9 +13,15 @@ import json
 from PIL import Image, ImageTk
 import datetime
 from tkinter import Toplevel, StringVar  # เพิ่ม StringVar ถ้ายังไม่มี
-ATHLETE_FILE = "athletes.json"
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+# Get the project root directory (parent of src/)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(PROJECT_ROOT, "data")
+ASSETS_DIR = os.path.join(PROJECT_ROOT, "assets")
+
+ATHLETE_FILE = os.path.join(DATA_DIR, "athletes.json")
 
 # เก็บ athlete_id ของแต่ละ Player ที่เลือก
 selected_player_ids = {f'Player {i}': None for i in range(1, 11)}

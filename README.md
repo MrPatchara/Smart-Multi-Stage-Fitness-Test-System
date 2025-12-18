@@ -151,17 +151,19 @@ pip install -r requirements.txt
 - `bleak` - Bluetooth Low Energy support (for HRV)
 - `numpy` - Numerical computations
 - `scipy` - Signal processing
+- `pyttsx3` - Text-to-speech (for beep test)
+- `pygame` - Audio playback
 
 ### Step 3: Install MQTT Broker
 
-1. Download and install Mosquitto from the `setup moss/` directory
+1. Download and install Mosquitto from the `setup/mqtt_broker/` directory
 2. Configure the broker IP address in the application settings
 3. Default broker IP: `192.168.100.189`
 
 ### Step 4: Configure Arduino Sensors
 
 1. Upload the appropriate Arduino sketch to your sensors
-2. Available sketches:
+2. Available sketches in `firmware/sensors/`:
    - `Player1_Sensor_A_v3/Player1_Sensor_A_v3.ino`
    - `Player1_Sensor_B_v3/Player1_Sensor_B_v3.ino`
    - `Player2_Sensor_C_v3/Player2_Sensor_C_v3.ino`
@@ -174,7 +176,7 @@ pip install -r requirements.txt
 ### Running RAST Test
 
 ```bash
-python rast5.py
+python src/rast_test.py
 ```
 
 1. Select an athlete from the database
@@ -186,7 +188,7 @@ python rast5.py
 ### Running Multi-Stage Timing Gates
 
 ```bash
-python gate16.py
+python src/timing_gate_system.py
 ```
 
 1. Select athlete or team mode
@@ -198,7 +200,7 @@ python gate16.py
 ### Heart Rate Variability Monitoring
 
 ```bash
-python "HR1 .py"
+python src/heart_rate_monitor.py
 ```
 
 1. Ensure Polar H10 is powered on and nearby
@@ -206,28 +208,87 @@ python "HR1 .py"
 3. Connect and start monitoring
 4. View real-time HRV metrics and ECG-like visualization
 
+### Multi-Stage Beep Test
+
+```bash
+python src/multi_stage_beep_test.py
+```
+
+1. Select multiple athletes (up to 10 players)
+2. Configure test parameters
+3. Start the beep test protocol
+4. Monitor real-time heart rate and performance
+
 ---
 
-## 🔧 Components
+## 🔧 Project Structure
+
+```
+SmartMultiStage_FitnessTest_Sys/
+├── src/                          # Main application source code
+│   ├── rast_test.py             # RAST (Running Anaerobic Sprint Test)
+│   ├── timing_gate_system.py    # Multi-stage timing gate system
+│   ├── heart_rate_monitor.py    # HRV monitoring (Polar H10)
+│   ├── heart_rate_monitor_v2.py # Alternative HRV interface
+│   └── multi_stage_beep_test.py # Multi-stage beep test
+│
+├── firmware/                     # Arduino sensor firmware
+│   └── sensors/                 # Sensor firmware files
+│       ├── Player1_Sensor_A_v3/
+│       ├── Player1_Sensor_B_v3/
+│       ├── Player2_Sensor_C_v3/
+│       └── Player2_Sensor_D_v3.txt/
+│
+├── data/                        # Data storage (JSON files)
+│   ├── athletes.json           # Athlete database
+│   ├── teams.json              # Team configurations
+│   ├── rast_results.json       # RAST test results
+│   ├── timing_gate_results.json # Timing gate results
+│   └── team_results.json       # Team test results
+│
+├── assets/                      # Media and resource files
+│   ├── images/                 # Image files
+│   ├── *.mp3                   # Audio files (beeps, etc.)
+│   └── *.jpg, *.png            # Additional images
+│
+├── awards/                      # Award documentation
+│   ├── award.jpg               # Award ceremony photo
+│   ├── award1.jpg              # Award recognition photo
+│   └── award2.jpg              # Official certificate
+│
+├── docs/                        # Documentation
+│   ├── spec_sheet/             # Specification sheets
+│   └── *.pdf, *.doc            # Official documents
+│
+├── setup/                       # Setup and installation files
+│   └── mqtt_broker/            # MQTT broker installation
+│
+├── README.md                    # This file
+└── LICENSE                      # MIT License
+```
 
 ### Main Applications
 
 | File | Description |
 |------|-------------|
-| `rast5.py` | Latest RAST test application with full features |
-| `gate16.py` | Advanced multi-stage timing gate system |
-| `HR1 .py` | Heart rate variability monitor |
-| `HR2 .py` | Alternative HRV monitoring interface |
+| `src/rast_test.py` | RAST test application with full features |
+| `src/timing_gate_system.py` | Advanced multi-stage timing gate system |
+| `src/heart_rate_monitor.py` | Heart rate variability monitor (Polar H10) |
+| `src/heart_rate_monitor_v2.py` | Alternative HRV monitoring interface |
+| `src/multi_stage_beep_test.py` | Multi-stage beep test with HR monitoring |
 
-### Configuration Files
+### Data Files
 
+All data files are stored in the `data/` directory:
 - `athletes.json` - Athlete database
 - `teams.json` - Team configurations
 - `rast_results.json` - RAST test results
 - `timing_gate_results.json` - Timing gate results
+- `team_results.json` - Team test results
 
 ### Arduino Firmware
 
+Sensor firmware is located in `firmware/sensors/`:
 - Sensor A/B/C/D firmware for timing gates
 - MQTT-enabled sensor communication
 
@@ -243,11 +304,24 @@ python "HR1 .py"
 
 ---
 
-<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; margin: 20px 0;">
+<div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin: 30px 0;">
 
-![Award Image](pic_for_send/award_photo.jpg)
-*🏆 Add your award photo here - Replace `pic_for_send/award_photo.jpg` with your actual award image path*
+<div style="flex: 1; min-width: 300px; text-align: center;">
+  <h4>🏆 Award Ceremony</h4>
+  <img src="awards/award.jpg" alt="Award Ceremony" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+</div>
 
+<div style="flex: 1; min-width: 300px; text-align: center;">
+  <h4>🎖️ Award Recognition</h4>
+  <img src="awards/award1.jpg" alt="Award Recognition" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+</div>
+
+</div>
+
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; margin: 20px 0; text-align: center;">
+  <h4>📜 Official Award Certificate</h4>
+  <img src="awards/award2.jpg" alt="Official Award Certificate" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+  <p style="margin-top: 15px; color: white; font-weight: bold;">Official confirmation document from Department of Physical Education</p>
 </div>
 
 ---

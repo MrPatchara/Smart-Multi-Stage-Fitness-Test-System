@@ -6,13 +6,19 @@ from tkinter import simpledialog, filedialog
 from PIL import Image, ImageTk
 import os
 import csv
+import sys
+
+# Get the project root directory (parent of src/)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(PROJECT_ROOT, "data")
+ASSETS_DIR = os.path.join(PROJECT_ROOT, "assets")
 
 # ---------- CONFIG ----------
 MQTT_TOPIC_START = "fitness_test/athlete_status_A"
 MQTT_TOPIC_STOP = "fitness_test/athlete_status_B"
 MQTT_BROKER_IP = "192.168.100.189"
-RAST_RESULT_FILE = "rast_results.json"
-ATHLETE_FILE = "athletes.json"
+RAST_RESULT_FILE = os.path.join(DATA_DIR, "rast_results.json")
+ATHLETE_FILE = os.path.join(DATA_DIR, "athletes.json")
 MAX_SPRINTS = 6
 
 # ---------- GLOBALS ----------
