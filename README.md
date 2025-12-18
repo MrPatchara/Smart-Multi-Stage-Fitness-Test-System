@@ -23,6 +23,7 @@
 ## 📋 Table of Contents
 
 - [Overview](#-overview)
+- [Demo Video](#-demo-video)
 - [Features](#-features)
 - [System Architecture](#-system-architecture)
 - [Installation](#-installation)
@@ -47,6 +48,22 @@ The **Smart Multi-Stage Fitness Test System** is a comprehensive, IoT-based solu
 - 👥 **Multi-Athlete Support** - Individual and team testing modes
 - 📈 **Data Export** - JSON, CSV, and PDF report generation
 - 💓 **HRV Monitoring** - Heart rate variability analysis with Polar H10
+
+---
+
+## 🎥 Demo Video
+
+<div align="center">
+
+### 📺 Watch the System in Action
+
+[![Smart Multi-Stage Fitness Test System Demo](https://img.youtube.com/vi/a3_Rm-xb4SM/0.jpg)](https://www.youtube.com/watch?v=a3_Rm-xb4SM&t=8s)
+
+**Click the image above to watch the demonstration video**
+
+*This video showcases the system's features, setup process, and real-world usage scenarios.*
+
+</div>
 
 ---
 
